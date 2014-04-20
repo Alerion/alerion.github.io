@@ -98,8 +98,17 @@
 	<section class="slide"><div>
 		<h2>Docbook</h2>
 
-		<pre>
-			Пример кода
+		<pre style="font-size: 0.70em; line-height: normal;">
+			<code>&lt;chapter lang="ru" id="&amp;BASEID;"&gt;</code>
+			<code>  &lt;title id="&amp;BASEID;.title"&gt;Введение в Django&lt;/title&gt;</code>
+			<code>  &lt;section id="&amp;BASEID;.whatis"&gt;</code>
+			<code>   &lt;para&gt;</code>
+			<code>      Django является видным представителем нового поколения</code>
+			<code>      &lt;emphasis&gt;сред разработки&lt;/emphasis&gt;, но что же конкретно</code>
+			<code>      подразумевают под этим термином?</code>
+			<code>    &lt;/para&gt;</code>
+			<code>  &lt;/section&gt;</code>
+			<code>&lt;/chapter&gt;</code>
 		</pre>
 
 		<footer>
@@ -120,7 +129,7 @@
 		</ul>
 
 		<footer>
-			Как у нас были идеи перевести докуменацию, но не было простых способов поддерживать перевод.
+			Как у нас были идеи перевести докуменацию, но не было простых способов поддерживать перевод. Еще хотели перевести Pro Django.
 		</footer>		
 	</div></section>
 
@@ -129,7 +138,7 @@
 
 		Added i18n support for content, a gettext builder and related utilities.
 		<footer>
-			Начало перевода Feb 15, 2012.
+			Начало перевода Feb 15, 2012. Цель перевести основные разделы. Аналогичные проекты не ушли дальше двух глав.
 		</footer>
 	</div></section>
 
@@ -140,10 +149,127 @@
 	</div></section>
 
 	<section class="slide"><div>
+		<pre>
+			<code>&gt; pop install Sphinx</code>
+			<code>&gt; sphinx-quickstart</code>
+			<code>&gt; ls</code>
+			<code>Makefile      _static         conf.py</code>
+			<code>_build                _templates      index.rst</code>
+			<code>&gt; make html</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<img src="pictures/index.png" alt="">
+	</div></section>
+
+	<section class="slide"><div>
 		<h2>reStructuredText</h2>
 
 		http://sphinx-doc.org/rest.html
 	</div></section>
+
+	<section class="slide"><div>
+		<pre style="margin-top: -80px; line-height: normal;">
+			=====================================<br>
+			Writing your first Django app, part 1<br>
+			=====================================<br>
+			<br>
+			It'll consist of two parts:<br>
+			<br>
+			* A public site that lets people view polls and vote in them.<br>
+			* An admin site that lets you add, change and delete polls.<br>
+			<br>
+			We'll assume you have :doc:`Django installed &lt;/intro/install&gt;` already. You can
+			tell Django is installed and which version by running the following command:<br>
+			<br>
+			.. code-block:: bash<br>
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;python -c "import django; print(django.get_version())"
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Генерация в различные форматы</h2>
+
+		<ul>
+			<li>html, dirhtml, singlehtml</li>
+			<li>PDF</li>
+			<li>Plain text</li>
+			<li>man page</li>
+			<li>Epub</li>
+			<li>other...</li>
+		</ul>
+	</div></section>	
+
+	<section class="slide"><div>
+		<h2>Документирование кода</h2>
+
+		<pre style="font-size: 0.8em;">
+			<code>.. py:function:: send_message(message, [priority=1])</code>
+			<code></code>
+			<code>   Send a message to a recipient</code>
+			<code></code>
+			<code>   :param str message: The body of the message</code>
+			<code>   :param priority: The priority of the message, can be a number 1-5</code>
+			<code>   :type priority: integer or None</code>
+			<code>   :return: the message id</code>
+			<code>   :raises ValueError: if the message exceeds 160 characters</code>
+			<code>   :raises TypeError: if the message is not a basestring</code>
+   		</pre>
+	</div></section>	
+
+	<section class="slide"><div>
+		<h2>Поддержка различных языков программирования</h2>
+
+		<ul>
+			<li>Python</li>
+			<li>C</li>
+			<li>C++</li>
+			<li>PHP</li>
+			<li>Ruby</li>
+			<li>JavaScript</li>
+			<li>other...</li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Autodoc</h2>
+
+		<p>Генерация опиания кода из docstrings.</p>
+
+		<pre>
+			<code>.. automodule:: io</code>
+			<code>   :members:</code>
+		</pre>
+
+		<p>Можно ссылать на описание функций из внешней документации.</p>
+
+		<pre>
+			<code>:py:func:`io.open`</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>sphinx-apidoc</h2>
+
+		<p>Создает с нуля документацию API используя docstrings.</p>
+
+		<pre style="font-size: 0.9em;">
+			<code>$ sphinx-apidoc [options] -o outputdir packagedir [pathnames]</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Еще фичи</h2>
+
+		<ul>
+			<li>Разлчиные HTML темы</li>
+			<li>Extensions</li>
+			<li>Глосарий</li>
+			<li>Internationalization</li>
+		</ul>
+	</div></section>	
 
 	<section class="slide"><div>
 		<h2>Gettext</h2>
@@ -154,7 +280,7 @@
 	<section class="slide"><div>
 		<h2>Процесс перевода</h2>
 
-		Что делают скрипты.
+		<img src="pictures/translation.png" alt="">
 		<footer>
 			<a href="https://github.com/Alerion/django_documentation/commits/master?page=15">Первые коммиты</a> чтобы не искать<br>
 			<a href="https://github.com/Alerion/django_documentation/wiki/%D0%9A%D0%B0%D0%BA-%D0%BF%D0%BE%D0%BC%D0%BE%D1%87%D1%8C-%D1%81-%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%D0%BE%D0%BC%3F">Гайд для переводчиков</a>
@@ -170,7 +296,7 @@
 		<h2>Развитие инструментов первода</h2>
 
 		От пачки скриптов до CLI приложения. Как для фана добавляли статистику перевода, комментарии к документации,
-		гайд для переводчиков.(Сделать пачку слайдов с картинками)
+		гайд для переводчиков, список помогающих.(Сделать пачку слайдов с картинками)
 	</div></section>	
 
 	<section class="slide"><div>
@@ -193,16 +319,10 @@
 	</div></section>	
 
 	<section class="slide"><div>
-		<h2>Transifex</h2>
+		<h2>sphinx-intl и Transifex</h2>
+
+		http://sphinx-doc.org/intl.html
 	</div></section>	
-
-	<section class="slide"><div>
-		<h2>sphinx-apidoc</h2>
-
-		<footer>
-			http://sphinx-doc.org/invocation.html#invocation-of-sphinx-apidoc
-		</footer>
-	</div></section>
 
 	<section class="slide"><div>
 		<h2>https://readthedocs.org/</h2>
