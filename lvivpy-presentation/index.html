@@ -12,134 +12,218 @@
 		<h1>Организация перевода документации на основе Sphinx и Gettext</h1>
 		<p>Дмитрий Косточко</p>
 	</header>
+
 	<section class="slide"><div>
 		<h2>Организация перевода документации на основе Sphinx и Gettext</h2>
 		<p>Дмитрий Косточко</p>
+		<footer>
+			Мой доклад "...". Я расскажу как мы переводили документацию Django, о документации, Sphinx и gettext.
+			Это будет история развития проекта в перемешку с техническими данными.
+		</footer>
 	</div></section>
+
 	<section class="slide"><div>
-		<h2>Shower Key Features</h2>
-		<ol>
-			<li>Built on HTML, CSS and vanilla JavaScript</li>
-			<li>All modern browsers are supported</li>
-			<li>Slide themes are separated from engine</li>
-			<li>Fully keyboard accessible</li>
-			<li>Printable to PDF</li>
-		</ol>
-		<p class="note">Shower ['ʃəuə] noun. A person or thing that shows.</p>
+		<ul>
+			<li>http://djbook.ru/</li>
+			<li>https://github.com/Alerion/django_documentation</li>
+			<li>http://sphinx-doc.org/</li>
+		</ul>
+		<footer>
+			Здесь находится перевод, его исходники, и ссылка на документацию Sphinx.
+			Это не официальный перевод, просто наш pet project, которым мы занимаемся на полном энтузиазме.
+			<i>Рассказать зачем мы этим занимаемся. Типа в наших реалиях не все имели возможность выучить англ. в школе, а кушать и рубить бабос нужно уже сейчас.</i>
+		</footer>
 	</div></section>
+
 	<section class="slide"><div>
-		<h2>Plain Text on Your Slides</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur <a href="#4">adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <em>quis nostrud</em> exercitation ullamco laboris <strong>nisi ut aliquip</strong> ex ea commodo consequat. Duis aute irure <i>dolor</i> in reprehenderit in voluptate velit esse cillum <b>dolore</b> eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in <code>&lt;culpa&gt;</code> qui officia deserunt mollit anim id est laborum.</p>
-	</div></section>
-	<section class="slide"><div>
-		<h2>All Kind of Lists</h2>
-		<ol>
-			<li>Simple lists are marked with bullets</li>
-			<li>Ordered lists begin with a number</li>
-			<li>You can even nest lists one inside another
-				<ul>
-					<li>Or mix their types</li>
-					<li>But do not go too far</li>
-					<li>Otherwise audience will be bored</li>
-				</ul>
-			</li>
-			<li>Look, seven rows exactly!</li>
-		</ol>
-	</div></section>
-	<section class="slide"><div>
-		<h2>Serious Citations</h2>
+		<h2>Важность документации</h2>
 		<figure>
 			<blockquote>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+				<p>Документация - как секс: если она хороша, то это очень, очень хорошо; а если она плоха, то это лучше чем ничего.</p>
 			</blockquote>
-			<figcaption>Marcus Tullius Cicero</figcaption>
+			<figcaption>Дик Брэндон</figcaption>
 		</figure>
+		<footer>
+			<i>Обсудить важность документации, важность для open source проектов. Способы организации документации.</i>
+		</footer>
 	</div></section>
+
 	<section class="slide"><div>
-		<h2>Code Samples</h2>
+		<h2>Способы организовать документацию</h2>
+
+		<ul>
+			<li>reStructuredText, Markdown, docbook</li>
+			<li>Wiki, Confluence</li>
+			<li>комментарии в коде</li>
+			<li>Google Docs</li>
+		</ul>
+		<footer>
+			Google Docs - удобно тем что групповое редактирование, применяются для рисования часто всяких диаграмм.<br>
+			<b>Что еще стоит упомянуть? LaTeX?</b>
+		</footer>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Требования к иснтрументам для документации</h2>
+
+		<ul>
+			<li>Текстовой формат хранения документа(для удовной работы в VCS).</li>
+			<li>Возможность оформления и стилизации.</li>
+			<li>Возможность сборки в различные форматы.</li>
+			<li>Перекрестные ссылки, DRY.</li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Документация Django</h2>
+
+		<ul>
+			<li>Считается большим плюсом Django.</li>
+			<li>Постоянно развивается. Много ньюансов описано за последние годы.</li>
+			<li>...</li>
+		</ul>
+	</div></section>	
+
+	<section class="slide"><div>
+		<h2>С чего все началось</h2>
+
+		Перевод "The Django Book".
+
+		<footer>
+			Весна 2008-го. Рассказать про Django Book, что давно не обновляли ее. Как Руслан переводил по дороге на работу.
+			Проблемы самостоятельно обновлять книгу.
+		</footer>
+	</div></section>		
+
+	<section class="slide"><div>
+		<h2>Docbook</h2>
+
 		<pre>
-			<code>&lt;!DOCTYPE html&gt;</code>
-			<code>&lt;html lang="en"&gt;</code>
-			<code><mark>&lt;head&gt;</mark> <mark class="comment">&lt;!--Comment--&gt;</mark></code>
-			<code>    &lt;title&gt;Shower&lt;/title&gt;</code>
-			<code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
-			<code>    &lt;link rel="stylesheet" href="screen.css"&gt;</code>
-			<code><mark>&lt;/head&gt;</mark></code>
+			Пример кода
 		</pre>
+
+		<footer>
+			<a href="http://habrahabr.ru/post/212881/">http://habrahabr.ru/post/212881/</a><br>
+			XML не лучший формат.<br>
+			Как мы с ним работали.
+		</footer>
 	</div></section>
+
 	<section class="slide"><div>
-		<h2>Even Tables</h2>
-		<table>
-		<tr>
-			<th scope="col">Locavore</th>
-			<th>Umami</th>
-			<th>Helvetica</th>
-			<th>Vegan</th>
-		</tr>
-		<tr>
-			<th scope="row">Fingerstache</th>
-			<td>Kale</td>
-			<td>Chips</td>
-			<td>Keytar</td>
-		</tr>
-		<tr>
-			<th scope="row">Sriracha</th>
-			<td>Gluten-free</td>
-			<td>Ennui</td>
-			<td>Keffiyeh</td>
-		</tr>
-		<tr>
-			<th scope="row">Thundercats</th>
-			<td>Jean</td>
-			<td>Shorts</td>
-			<td>Biodiesel</td>
-		</tr>
-		<tr>
-			<th scope="row">Terry</th>
-			<td>Richardson</td>
-			<td>Swag</td>
-			<td>Blog</td>
-		</tr>
-		</table>
-		<p>It’s good to have information organized.</p>
+		<h2>Как бы нам переводить документацию Django?</h2>
+
+		<ul>
+			<li>Она хорошая.</li>
+			<li>Ее постоянно поддерживают.</li>
+			<li>Sphinx уже делает всю сборку.</li>
+			<li>Но есть проблема с обновлением перевода.</li>
+		</ul>
+
+		<footer>
+			Как у нас были идеи перевести докуменацию, но не было простых способов поддерживать перевод.
+		</footer>		
 	</div></section>
-	<section class="slide cover" id="Picture"><div>
-		<h2>Pictures</h2>
-		<img src="pictures/picture.jpg" alt="">
-		<style>
-			#Picture h2 {
-				color:#FFF;
-				}
-		</style>
-	</div></section>
-	<section class="slide shout"><div>
-		<h2>You can even shout this way</h2>
-	</div></section>
+
 	<section class="slide"><div>
-		<h2>Inner Navigation</h2>
-		<ol>
-			<li>Lets you reveal list items one by one</li>
-			<li class="next">To keep some key points</li>
-			<li class="next">In secret from audience</li>
-			<li class="next">But it will work only once</li>
-			<li class="next">Nobody wants to see the same joke twice</li>
-		</ol>
+		<h2>Sphinx 1.1 (Oct 9, 2011)</h2>
+
+		Added i18n support for content, a gettext builder and related utilities.
+		<footer>
+			Начало перевода Feb 15, 2012.
+		</footer>
 	</div></section>
-	<section class="slide shout" id="SeeMore"><div>
-		<h2><img src="pictures/logo.svg" alt=""> <a href="https://github.com/shower/shower">See more on GitHub</a></h2>
-		<style>
-			#Picture h2 {
-				color:#FFF;
-				}
-			#SeeMore h2 {
-				font-size:100px
-				}
-			#SeeMore img {
-				width:0.72em;
-				height:0.72em;
-				}
-		</style>
+
+	<section class="slide"><div>
+		<h2>Sphinx</h2>
+
+		Рассказать про Sphinx.
 	</div></section>
+
+	<section class="slide"><div>
+		<h2>reStructuredText</h2>
+
+		http://sphinx-doc.org/rest.html
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Gettext</h2>
+
+		Информация о нем. Как работает. Для примера можно рассказать как он работает в Django.
+	</div></section>	
+
+	<section class="slide"><div>
+		<h2>Процесс перевода</h2>
+
+		Что делают скрипты.
+		<footer>
+			<a href="https://github.com/Alerion/django_documentation/commits/master?page=15">Первые коммиты</a> чтобы не искать<br>
+			<a href="https://github.com/Alerion/django_documentation/wiki/%D0%9A%D0%B0%D0%BA-%D0%BF%D0%BE%D0%BC%D0%BE%D1%87%D1%8C-%D1%81-%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%D0%BE%D0%BC%3F">Гайд для переводчиков</a>
+		</footer>
+	</div></section>	
+
+	<section class="slide"><div>
+		<h2>Процесс обновления перевода с выходом новой версии Django</h2>
+
+	</div></section>	
+
+	<section class="slide"><div>
+		<h2>Развитие инструментов первода</h2>
+
+		От пачки скриптов до CLI приложения. Как для фана добавляли статистику перевода, комментарии к документации,
+		гайд для переводчиков.(Сделать пачку слайдов с картинками)
+	</div></section>	
+
+	<section class="slide"><div>
+		<i>Рассказать как нам помогают переводить.</i>
+		49 pull requests. Комментарии в доке.
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Инструменты для перевода</h2>
+
+		<ul>
+			<li>Gtranslator</li>
+			<li>Poedit</li>
+			<li>Ando</li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Дальше можно рассказать о всяком интересном связанном с документацией и переводом</h2>
+	</div></section>	
+
+	<section class="slide"><div>
+		<h2>Transifex</h2>
+	</div></section>	
+
+	<section class="slide"><div>
+		<h2>sphinx-apidoc</h2>
+
+		<footer>
+			http://sphinx-doc.org/invocation.html#invocation-of-sphinx-apidoc
+		</footer>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>https://readthedocs.org/</h2>
+
+		<footer>
+			Хочу упомянуть о readthedocs.
+		</footer>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Наставления новичкам</h2>
+		<ul>
+			<li>учить английский</li>
+			<li>читать документацию</li>
+			<li>учить Python перед Django</li>
+		</ul>
+		<footer>
+			Наши наблюдения читают ли люди документацию. Читают не прочитав доку Python.
+		</footer>
+	</div></section>
+
 	<p class="badge"><a href="https://github.com/shower/shower">Fork me on Github</a></p>
 	<!--
 		To hide progress bar from entire presentation
