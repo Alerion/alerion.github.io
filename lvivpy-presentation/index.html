@@ -24,9 +24,9 @@
 
 	<section class="slide"><div>
 		<ul>
-			<li>http://djbook.ru/</li>
-			<li>https://github.com/Alerion/django_documentation</li>
-			<li>http://sphinx-doc.org/</li>
+			<li><a href="http://djbook.ru/">http://djbook.ru/</a></li>
+			<li><a href="https://github.com/Alerion/django_documentation">https://github.com/Alerion/django_documentation</a></li>
+			<li><a href="http://sphinx-doc.org/">http://sphinx-doc.org/</a></li>
 		</ul>
 		<footer>
 			Здесь находится перевод, его исходники, и ссылка на документацию Sphinx.
@@ -82,7 +82,7 @@
 			<li>Постоянно развивается. Много ньюансов описано за последние годы.</li>
 			<li>...</li>
 		</ul>
-	</div></section>	
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>С чего все началось</h2>
@@ -93,7 +93,7 @@
 			Весна 2008-го. Рассказать про Django Book, что давно не обновляли ее. Как Руслан переводил по дороге на работу.
 			Проблемы самостоятельно обновлять книгу.
 		</footer>
-	</div></section>		
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>Docbook</h2>
@@ -130,7 +130,7 @@
 
 		<footer>
 			Как у нас были идеи перевести докуменацию, но не было простых способов поддерживать перевод. Еще хотели перевести Pro Django.
-		</footer>		
+		</footer>
 	</div></section>
 
 	<section class="slide"><div>
@@ -166,7 +166,9 @@
 	<section class="slide"><div>
 		<h2>reStructuredText</h2>
 
-		http://sphinx-doc.org/rest.html
+		<p>Язык разметки текстовых данных.</p>
+
+		<p>Описание <a href="http://sphinx-doc.org/rest.html">http://sphinx-doc.org/rest.html</a></p>
 	</div></section>
 
 	<section class="slide"><div>
@@ -200,7 +202,7 @@
 			<li>Epub</li>
 			<li>other...</li>
 		</ul>
-	</div></section>	
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>Документирование кода</h2>
@@ -217,7 +219,7 @@
 			<code>   :raises ValueError: if the message exceeds 160 characters</code>
 			<code>   :raises TypeError: if the message is not a basestring</code>
    		</pre>
-	</div></section>	
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>Поддержка различных языков программирования</h2>
@@ -269,13 +271,45 @@
 			<li>Глосарий</li>
 			<li>Internationalization</li>
 		</ul>
-	</div></section>	
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>Gettext</h2>
 
-		Информация о нем. Как работает. Для примера можно рассказать как он работает в Django.
-	</div></section>	
+		Библиотека проекта GNU для интернационализации, широко применяемая в свободном ПО.
+	</div></section>
+
+	<section class="slide"><div>
+		<img src="pictures/gettext.png" alt="" style="margin-top: -80px">
+	</div></section>
+
+	<section class="slide"><div>
+		<pre>
+			<code>print(_("Hello! My name is %s.") % name)</code>
+			<code>&nbsp;</code>
+		</pre>
+
+		<pre>
+			<code>#: src/main.py:36</code>
+			<code>msgid "Hello! My name is %s."</code>
+			<code>msgstr "Привет! Меня зовут %s."</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<pre>
+			<code>Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0</code>
+			<code>: n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)</code>
+		</pre>
+
+		<pre>
+			<code>msgid "%d day ago"</code>
+			<code>msgid_plural "%d days ago"</code>
+			<code>msgstr[0] "%d день назад"</code>
+			<code>msgstr[1] "%d дня назад"</code>
+			<code>msgstr[2] "%d дней назад"</code>
+		</pre>
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>Процесс перевода</h2>
@@ -285,19 +319,19 @@
 			<a href="https://github.com/Alerion/django_documentation/commits/master?page=15">Первые коммиты</a> чтобы не искать<br>
 			<a href="https://github.com/Alerion/django_documentation/wiki/%D0%9A%D0%B0%D0%BA-%D0%BF%D0%BE%D0%BC%D0%BE%D1%87%D1%8C-%D1%81-%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%D0%BE%D0%BC%3F">Гайд для переводчиков</a>
 		</footer>
-	</div></section>	
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>Процесс обновления перевода с выходом новой версии Django</h2>
 
-	</div></section>	
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>Развитие инструментов первода</h2>
 
 		От пачки скриптов до CLI приложения. Как для фана добавляли статистику перевода, комментарии к документации,
 		гайд для переводчиков, список помогающих.(Сделать пачку слайдов с картинками)
-	</div></section>	
+	</div></section>
 
 	<section class="slide"><div>
 		<i>Рассказать как нам помогают переводить.</i>
@@ -316,13 +350,13 @@
 
 	<section class="slide"><div>
 		<h2>Дальше можно рассказать о всяком интересном связанном с документацией и переводом</h2>
-	</div></section>	
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>sphinx-intl и Transifex</h2>
 
 		http://sphinx-doc.org/intl.html
-	</div></section>	
+	</div></section>
 
 	<section class="slide"><div>
 		<h2>https://readthedocs.org/</h2>
