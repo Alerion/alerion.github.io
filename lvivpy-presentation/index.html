@@ -54,8 +54,8 @@
 		<ul>
 			<li>reStructuredText, Markdown, docbook</li>
 			<li>Wiki, Confluence</li>
-			<li>комментарии в коде</li>
 			<li>Google Docs</li>
+			<li>Комментарии в коде</li>
 		</ul>
 		<footer>
 			Google Docs - удобно тем что групповое редактирование, применяются для рисования часто всяких диаграмм.<br>
@@ -64,7 +64,7 @@
 	</div></section>
 
 	<section class="slide"><div>
-		<h2>Требования к иснтрументам для документации</h2>
+		<h2>Требования к инструментам для документации</h2>
 
 		<ul>
 			<li>Текстовой формат хранения документа(для удовной работы в VCS).</li>
@@ -79,15 +79,16 @@
 
 		<ul>
 			<li>Считается большим плюсом Django.</li>
+			<li>Объемная. В PDF 1300+ страниц.</li>
 			<li>Постоянно развивается. Много ньюансов описано за последние годы.</li>
-			<li>...</li>
 		</ul>
 	</div></section>
 
 	<section class="slide"><div>
 		<h2>С чего все началось</h2>
 
-		Перевод "The Django Book".
+		Перевод "The Django Book" для Django 1.0.<br>
+		<a href="http://www.djangobook.com/">http://www.djangobook.com/</a>
 
 		<footer>
 			Весна 2008-го. Рассказать про Django Book, что давно не обновляли ее. Как Руслан переводил по дороге на работу.
@@ -136,7 +137,12 @@
 	<section class="slide"><div>
 		<h2>Sphinx 1.1 (Oct 9, 2011)</h2>
 
-		Added i18n support for content, a gettext builder and related utilities.
+		<figure>
+			<blockquote>
+				<p>Added i18n support for content, a gettext builder and related utilities.</p>
+			</blockquote>
+		</figure>
+
 		<footer>
 			Начало перевода Feb 15, 2012. Цель перевести основные разделы. Аналогичные проекты не ушли дальше двух глав.
 		</footer>
@@ -145,22 +151,9 @@
 	<section class="slide"><div>
 		<h2>Sphinx</h2>
 
-		Рассказать про Sphinx.
-	</div></section>
-
-	<section class="slide"><div>
-		<pre>
-			<code>&gt; pop install Sphinx</code>
-			<code>&gt; sphinx-quickstart</code>
-			<code>&gt; ls</code>
-			<code>Makefile      _static         conf.py</code>
-			<code>_build                _templates      index.rst</code>
-			<code>&gt; make html</code>
-		</pre>
-	</div></section>
-
-	<section class="slide"><div>
-		<img src="pictures/index.png" alt="">
+		<p>
+			Инструмент для создания документации на reStructuredText. C открытым исходным кодом. BDS лицензия.<br>
+		</p>
 	</div></section>
 
 	<section class="slide"><div>
@@ -266,10 +259,10 @@
 		<h2>Еще фичи</h2>
 
 		<ul>
-			<li>Разлчиные HTML темы</li>
-			<li>Extensions</li>
-			<li>Глосарий</li>
-			<li>Internationalization</li>
+			<li>Разлчиные HTML темы/</li>
+			<li>Расширения/</li>
+			<li>Глосарий/</li>
+			<li>Интернационализация</li>
 		</ul>
 	</div></section>
 
@@ -324,6 +317,11 @@
 	<section class="slide"><div>
 		<h2>Процесс обновления перевода с выходом новой версии Django</h2>
 
+		<ul>
+			<li>Обновляем исходники документации из официального репозитория.</li>
+			<li>Обновляем файлы перевода средставми Sphinx.</li>
+			<li>Исправляем перевод.</li>
+		</ul>
 	</div></section>
 
 	<section class="slide"><div>
@@ -363,18 +361,6 @@
 
 		<footer>
 			Хочу упомянуть о readthedocs.
-		</footer>
-	</div></section>
-
-	<section class="slide"><div>
-		<h2>Наставления новичкам</h2>
-		<ul>
-			<li>учить английский</li>
-			<li>читать документацию</li>
-			<li>учить Python перед Django</li>
-		</ul>
-		<footer>
-			Наши наблюдения читают ли люди документацию. Читают не прочитав доку Python.
 		</footer>
 	</div></section>
 
