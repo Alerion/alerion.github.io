@@ -10,16 +10,14 @@
 <body class="list">
 	<header class="caption">
 		<h1>Организация перевода документации на основе Sphinx и Gettext</h1>
+
 		<p>Дмитрий Косточко</p>
 	</header>
 
 	<section class="slide"><div>
 		<h2>Организация перевода документации на основе Sphinx и Gettext</h2>
+
 		<p>Дмитрий Косточко</p>
-		<footer>
-			Мой доклад "...". Я расскажу как мы переводили документацию Django, о документации, Sphinx и gettext.
-			Это будет история развития проекта в перемешку с техническими данными.
-		</footer>
 	</div></section>
 
 	<section class="slide"><div>
@@ -28,24 +26,17 @@
 			<li><a href="https://github.com/Alerion/django_documentation">https://github.com/Alerion/django_documentation</a></li>
 			<li><a href="http://sphinx-doc.org/">http://sphinx-doc.org/</a></li>
 		</ul>
-		<footer>
-			Здесь находится перевод, его исходники, и ссылка на документацию Sphinx.
-			Это не официальный перевод, просто наш pet project, которым мы занимаемся на полном энтузиазме.
-			<i>Рассказать зачем мы этим занимаемся. Типа в наших реалиях не все имели возможность выучить англ. в школе, а кушать и рубить бабос нужно уже сейчас.</i>
-		</footer>
 	</div></section>
 
 	<section class="slide"><div>
 		<h2>Важность документации</h2>
+
 		<figure>
 			<blockquote>
 				<p>Документация - как секс: если она хороша, то это очень, очень хорошо; а если она плоха, то это лучше чем ничего.</p>
 			</blockquote>
 			<figcaption>Дик Брэндон</figcaption>
 		</figure>
-		<footer>
-			<i>Обсудить важность документации, важность для open source проектов. Способы организации документации.</i>
-		</footer>
 	</div></section>
 
 	<section class="slide"><div>
@@ -57,17 +48,13 @@
 			<li>Google Docs</li>
 			<li>Комментарии в коде</li>
 		</ul>
-		<footer>
-			Google Docs - удобно тем что групповое редактирование, применяются для рисования часто всяких диаграмм.<br>
-			<b>Что еще стоит упомянуть? LaTeX?</b>
-		</footer>
 	</div></section>
 
 	<section class="slide"><div>
-		<h2>Требования к инструментам для документации</h2>
+		<h2>Требования к инструменту для создания документации</h2>
 
 		<ul>
-			<li>Текстовой формат хранения документа(для удовной работы в VCS).</li>
+			<li>Текстовой формат хранения(для удовной работы в VCS).</li>
 			<li>Возможность оформления и стилизации.</li>
 			<li>Возможность сборки в различные форматы.</li>
 			<li>Перекрестные ссылки, DRY.</li>
@@ -90,11 +77,6 @@
 
 		Перевод "The Django Book" для Django 1.0.<br>
 		<a href="http://www.djangobook.com/">http://www.djangobook.com/</a>
-
-		<footer>
-			Весна 2008-го. Рассказать про Django Book, что давно не обновляли ее. Как Руслан переводил по дороге на работу.
-			Проблемы самостоятельно обновлять книгу.
-		</footer>
 	</div></section>
 
 	<section class="slide"><div>
@@ -112,12 +94,6 @@
 			<code>  &lt;/section&gt;</code>
 			<code>&lt;/chapter&gt;</code>
 		</pre>
-
-		<footer>
-			<a href="http://habrahabr.ru/post/212881/">http://habrahabr.ru/post/212881/</a><br>
-			XML не лучший формат.<br>
-			Как мы с ним работали.
-		</footer>
 	</div></section>
 
 	<section class="slide"><div>
@@ -129,31 +105,24 @@
 			<li>Sphinx уже делает всю сборку.</li>
 			<li>Но есть проблема с обновлением перевода.</li>
 		</ul>
-
-		<footer>
-			Как у нас были идеи перевести докуменацию, но не было простых способов поддерживать перевод. Еще хотели перевести Pro Django.
-		</footer>
 	</div></section>
 
 	<section class="slide"><div>
-		<h2>Sphinx 1.1 (Oct 9, 2011)</h2>
+		<h2>Выход Sphinx 1.1</h2>
 
 		<figure>
 			<blockquote>
 				<p>Added i18n support for content, a gettext builder and related utilities.</p>
 			</blockquote>
+			<figcaption>Release notes Sphinx 1.1 (Oct 9, 2011)</figcaption>
 		</figure>
-
-		<footer>
-			Начало перевода Feb 15, 2012. Цель перевести основные разделы. Аналогичные проекты не ушли дальше двух глав.
-		</footer>
 	</div></section>
 
 	<section class="slide"><div>
 		<h2>Sphinx</h2>
 
 		<p>
-			Инструмент для создания документации на reStructuredText. C открытым исходным кодом. BDS лицензия.<br>
+			Инструмент для создания документации на reStructuredText. C открытым исходным кодом. BDS лицензия. Построен на базе Docutils для документирования Python.
 		</p>
 
 		<figure>
@@ -167,7 +136,7 @@
 	<section class="slide"><div>
 		<h2>reStructuredText</h2>
 
-		<p>Язык разметки текстовых данных.</p>
+		<p>Облегчённый язык разметки. Используется в системе подготовки технической документации Docutils</p>
 
 		<p>Описание <a href="http://sphinx-doc.org/rest.html">http://sphinx-doc.org/rest.html</a></p>
 	</div></section>
@@ -201,7 +170,7 @@
 			<li>Plain text</li>
 			<li>man page</li>
 			<li>Epub</li>
-			<li>other...</li>
+			<li>и другие</li>
 		</ul>
 	</div></section>
 
@@ -218,7 +187,7 @@
 			<code>   :type priority: integer or None</code>
 			<code>   :return: the message id</code>
 			<code>   :raises ValueError: if the message exceeds 160 characters</code>
-			<code>   :raises TypeError: if the message is not a basestring</code>
+			<code>   :raises TypeError: if the message is not a basestrinдg</code>
    		</pre>
 	</div></section>
 
@@ -232,7 +201,7 @@
 			<li>PHP</li>
 			<li>Ruby</li>
 			<li>JavaScript</li>
-			<li>other...</li>
+			<li>и другие</li>
 		</ul>
 	</div></section>
 
@@ -267,9 +236,9 @@
 		<h2>Еще фичи</h2>
 
 		<ul>
-			<li>Разлчиные HTML темы/</li>
-			<li>Расширения/</li>
-			<li>Глосарий/</li>
+			<li>Различные HTML темы</li>
+			<li>Расширения</li>
+			<li>Глосарий</li>
 			<li>Интернационализация</li>
 		</ul>
 	</div></section>
@@ -316,10 +285,6 @@
 		<h2>Процесс перевода</h2>
 
 		<img src="pictures/translation.png" alt="">
-		<footer>
-			<a href="https://github.com/Alerion/django_documentation/commits/master?page=15">Первые коммиты</a> чтобы не искать<br>
-			<a href="https://github.com/Alerion/django_documentation/wiki/%D0%9A%D0%B0%D0%BA-%D0%BF%D0%BE%D0%BC%D0%BE%D1%87%D1%8C-%D1%81-%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%D0%BE%D0%BC%3F">Гайд для переводчиков</a>
-		</footer>
 	</div></section>
 
 	<section class="slide"><div>
@@ -333,18 +298,15 @@
 	</div></section>
 
 	<section class="slide"><div>
-		<h2>Развитие инструментов первода</h2>
+		<h2>Развитие инструмента для организации перевода</h2>
 
-		От пачки скриптов до CLI приложения. Как для фана добавляли статистику перевода, комментарии к документации,
-		гайд для переводчиков, список помогающих.(Сделать пачку слайдов с картинками)
-	</div></section>
-
-	<section class="slide"><div>
-		<h2>sphinx-intl</h2>
-
-		<p>
-			Инструмент для управления переводом.
-		</p>
+		<ul>
+			<li>От пачки скриптов до CLI приложения</li>
+			<li>Статистика перевода</li>
+			<li>Список помощников</li>
+			<li>Комментарии к тексту в документации</li>
+			<li>Автоматизация обновления документации</li>
+		</ul>
 	</div></section>
 
 	<section class="slide"><div>
@@ -358,11 +320,11 @@
 	</div></section>
 
 	<section class="slide"><div>
-		<h2>Дальше можно рассказать о всяком интересном связанном с документацией и переводом</h2>
-	</div></section>
-
-	<section class="slide"><div>
 		<h2>Transifex</h2>
+
+		<p>
+			Краудсорсинговая платформа для управления локализацией.
+		</p>
 
 		<p>
 			<a href="https://www.transifex.com/">https://www.transifex.com/</a>
@@ -380,9 +342,9 @@
 		<ul>
 			<li>Поддержка документации на Sphinx</li>
 			<li>Git, hg, bzr, svn</li>
-			<li>Автообновление.</li>
-			<li>Версионность.</li>
-			<li>Генерация PDF.</li>
+			<li>Автообновление</li>
+			<li>Версионность</li>
+			<li>Генерация PDF</li>
 		</ul>
 	</div></section>
 
