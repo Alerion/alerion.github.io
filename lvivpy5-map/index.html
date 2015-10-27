@@ -1,21 +1,29 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<title>Как я создавал тайловый сервер</title>
+	<title>Обработка и визуализация геоданных</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=792, user-scalable=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen.css">
 	<style>
-	.algo-image {
-		width: 600px;
-		margin-top: -150px;
+	.slide.algo div {
+		padding-top: 30px;
+	}
+
+	.slide.algo h2 {
+		font-size: 0.9em;
+	}
+
+	.slide.algo img {
+		width: 500px;
+		margin-top: -30px;
 	}
 	</style>
 </head>
 <body class="list">
 	<header class="caption">
-		<h1>Как я создавал тайловый сервер</h1>
+		<h1>Обработка и визуализация геоданных</h1>
 
 		<p>Дмитрий Косточко</p>
 	</header>
@@ -25,7 +33,7 @@
 	Расскажу немного теории, и о инструментах для работы с геоданными и их визуализации.
 		-->
 	<section class="slide"><div>
-		<h2>Как я создавал тайловый сервер</h2>
+		<h2>Обработка и визуализация геоданных</h2>
 
 		<p>Дмитрий Косточко</p>
 	</div></section>
@@ -42,12 +50,76 @@
 	</div></section>
 
 	<section class="slide"><div>
-		<img src="pictures/algo1.png" alt="" class="algo-image">
-		<p>Генерация случайных точек</p>
 		http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/
 	</div></section>
 
+	<section class="slide algo"><div>
+		<h2>Генерация случайных точек</h2>
+		<img src="pictures/algo1.png" alt="">
+	</div></section>
 
+	<section class="slide algo"><div>
+		<h2>Релаксации Ллойда</h2>
+		<img src="pictures/algo2.png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Строим диаграмму Вороного и нормализируем ребра</h2>
+		<img src="pictures/algo4.png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Создаем острова, используя Симплекс шум</h2>
+		<img src="pictures/algo5(islands_level=1.5).png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>land_threshold=-0.05</h2>
+		<img src="pictures/algo5(islands_level=1.5, land_threshold=-0.05).png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>islands_level=3</h2>
+		<img src="pictures/algo5(islands_level=3).png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Расчет высот</h2>
+		<img src="pictures/algo6.png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Создание рек</h2>
+		<img src="pictures/algo7.png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Расчет осадков</h2>
+		<img src="pictures/algo8.png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Определяем биомы</h2>
+		<img src="pictures/algo9.png" alt="">
+	</div></section>
+
+	<!--
+		Based on Whittaker diagram
+		-->
+	<section class="slide"><div>
+		<h2>Диаграмма биомов</h2>
+		<img src="pictures/biomes.png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Карта высот</h2>
+		<img src="pictures/hillshade1.png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Карта высот (2000 полигонов + шум)</h2>
+		<img src="pictures/hillshade2.png" alt="">
+	</div></section>
 	<!--
 		To hide progress bar from entire presentation
 		just remove “progress” element.
