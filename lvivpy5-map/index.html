@@ -15,9 +15,23 @@
 		font-size: 0.9em;
 	}
 
+	.slide.algo p {
+		font-size: 0.9em;
+	}
+
 	.slide.algo img {
 		width: 500px;
 		margin-top: -30px;
+	}
+
+	.slide.image img {
+		width: 700px;
+		margin-top: -70px;
+	}
+
+	pre {
+		font-size: 0.70em;
+		line-height: normal;
 	}
 	</style>
 </head>
@@ -50,7 +64,35 @@
 	</div></section>
 
 	<section class="slide"><div>
-		http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/
+		<h2>Генерация мира</h2>
+
+		<ol>
+			<li>Разбиваем плоскость на полигоны, используя диаграмму Вороного</li>
+			<li>Опрделеяем является ли полигон сушей</li>
+			<li>Генерируем карту высот</li>
+			<li>Генерируем реки</li>
+			<li>Расчитываем биомы</li>
+		</ol>
+
+		<a href="http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/">
+			http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/
+		</a>
+	</div></section>
+
+	<section class="slide image"><div>
+		<img src="pictures/map1.png" alt="">
+	</div></section>
+
+	<section class="slide image"><div>
+		<img src="pictures/map2.png" alt="">
+	</div></section>
+
+	<section class="slide image"><div>
+		<img src="pictures/map3.png" alt="">
+	</div></section>
+
+	<section class="slide image"><div>
+		<img src="pictures/map4.png" alt="">
 	</div></section>
 
 	<section class="slide algo"><div>
@@ -69,8 +111,14 @@
 	</div></section>
 
 	<section class="slide algo"><div>
-		<h2>Создаем острова, используя Симплекс шум</h2>
+		<h2>Создаем острова, используя шум Перлина</h2>
 		<img src="pictures/algo5(islands_level=1.5).png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Шум Перлина</h2>
+		<p>Алгоритм по генерированию процедурной текстуры псевдо-случайным методом. Используется в компьютерной графике для увеличения реализма, генерации эффектов дыма, тумана и т.д.</p>
+		<img src="pictures/perlin_noise.jpg" alt="">
 	</div></section>
 
 	<section class="slide algo"><div>
@@ -98,17 +146,115 @@
 		<img src="pictures/algo8.png" alt="">
 	</div></section>
 
+	<!--
+	Based on Whittaker diagram
+		-->
+	<section class="slide"><div>
+		<h2>Диаграмма биомов</h2>
+		<img src="pictures/biomes.png" alt="">
+	</div></section>
+
 	<section class="slide algo"><div>
 		<h2>Определяем биомы</h2>
 		<img src="pictures/algo9.png" alt="">
 	</div></section>
 
 	<!--
-		Based on Whittaker diagram
+	Гексовая сетка.
 		-->
+	<section class="slide algo"><div>
+		<h2>Добавляем города и регионы</h2>
+		<img src="pictures/algo10.png" alt="">
+	</div></section>
+
+	<section class="slide image"><div>
+		<img src="pictures/voronoi-map-goal-16000-shaded.png" alt="" style="width: 600px">
+	</div></section>
+
 	<section class="slide"><div>
-		<h2>Диаграмма биомов</h2>
-		<img src="pictures/biomes.png" alt="">
+		<h2>Используемые библиотеки</h2>
+		<ul>
+			<li>numpy (array, random)</li>
+			<li>skipy (KDTree, Voronoi)</li>
+			<li>shapely</li>
+			<li>noise</li>
+			<li>matplotlib</li>
+		</ul>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Геоданные</h2>
+		<p>Информация, которая имеет географическую (пространственную) привязку.</p>
+		<ul>
+			<li>Векторные</li>
+			<li>Растровые</li>
+		<ul>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>PostGIS + GeoDjango</h2>
+
+		<pre>
+			<code>from django.contrib.gis.db import models</code>
+			<code>&nbsp;</code>
+			<code>&nbsp;</code>
+			<code>class Biome(models.Model):</code>
+			<code>    name = models.CharField(max_length=100)</code>
+			<code>    biome = models.CharField(max_length=50, choices=BIOMES)</code>
+			<code>    geom = models.MultiPolygonField(srid=4326)  # WGS 84</code>
+			<code>&nbsp;</code>
+			<code>    objects = models.GeoManager()</code>
+			<code>&nbsp;</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Mapnik</h2>
+
+		<p>Открытая библиотека для рендеринга растровых карт из векторных данных.</p>
+		<p><a href="http://mapnik.org/">http://mapnik.org/</a></p>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>mapnik_config.xml</h2>
+
+		<pre>
+			<code>&lt;Map&gt;</code>
+			<code>    &lt;Style&gt;</code>
+			<code>        &lt;Rule/&gt;</code>
+			<code>    &lt;Style/&gt;</code>
+			<code>    &lt;Layer&gt;</code>
+			<code>        &lt;StyleName/&gt;</code>
+			<code>        &lt;Datasource/&gt;</code>
+			<code>    &lt;/Layer&gt;</code>
+			<code>&lt;/Map&gt;</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>mapnik_config.xml</h2>
+
+		<pre>
+		    <code>&lt;Rule&gt;</code>
+		    <code>    &lt;PolygonSymbolizer fill="#abceff"/&gt;</code>
+		    <code>    &lt;LineSymbolizer stroke="#abceff" stroke-width="1"  stroke-linejoin="round"/&gt;</code>
+		    <code>    &lt;Filter&gt;[biome] = 'OCEAN'&lt;/Filter&gt;</code>
+		    <code>&lt;/Rule&gt;</code>
+		    <code>&nbsp;</code>
+		    <code>&lt;Rule&gt;</code>
+		    <code>    &lt;PolygonPatternSymbolizer file="./tiles/GRASSLAND.png"/&gt;</code>
+		    <code>    &lt;LineSymbolizer stroke-width="0"/&gt;</code>
+		    <code>    &lt;Filter&gt;[biome] = 'GRASSLAND'&lt;/Filter&gt;</code>
+		    <code>&lt;/Rule&gt;</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>GeoTIFF</h2>
+		<p style="margin-bottom: 10px">
+			Открытый формат представления растровых данных в формате TIFF совместно с метаданными о географической привязке.
+		</p>
+		<img src="pictures/hillshade3.png" alt="" style="width: 700px">
 	</div></section>
 
 	<section class="slide algo"><div>
@@ -119,6 +265,21 @@
 	<section class="slide algo"><div>
 		<h2>Карта высот (2000 полигонов + шум)</h2>
 		<img src="pictures/hillshade2.png" alt="">
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Получаем данные в GeoJSON из базы данных</h2>
+
+		<pre>
+			<code>from django.core.serializers import serialize</code>
+			<code>&nbsp;</code>
+			<code>&nbsp;</code>
+			<code>def regions_data(request):</code>
+			<code>    output = serialize('geojson', Region.objects.all(),</code>
+			<code>                       geometry_field='geom', fields=('name', 'geom'))</code>
+			<code>    return HttpResponse(output, content_type='text/json')</code>
+			<code>&nbsp;</code>
+		</pre>
 	</div></section>
 	<!--
 		To hide progress bar from entire presentation
