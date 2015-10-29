@@ -63,22 +63,6 @@
 		<img src="pictures/1.jpg" alt="" style="margin-top: 30px">
 	</div></section>
 
-	<section class="slide"><div>
-		<h2>Генерация мира</h2>
-
-		<ol>
-			<li>Разбиваем плоскость на полигоны, используя диаграмму Вороного</li>
-			<li>Опрделеяем является ли полигон сушей</li>
-			<li>Генерируем карту высот</li>
-			<li>Генерируем реки</li>
-			<li>Расчитываем биомы</li>
-		</ol>
-
-		<a href="http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/">
-			http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/
-		</a>
-	</div></section>
-
 	<section class="slide image"><div>
 		<img src="pictures/map1.png" alt="">
 	</div></section>
@@ -93,6 +77,18 @@
 
 	<section class="slide image"><div>
 		<img src="pictures/map4.png" alt="">
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Генерация мира</h2>
+
+		<ol>
+			<li>Разбиваем плоскость на полигоны, используя диаграмму Вороного</li>
+			<li>Опрделеяем является ли полигон сушей</li>
+			<li>Генерируем карту высот</li>
+			<li>Генерируем реки</li>
+			<li>Расчитываем биомы</li>
+		</ol>
 	</div></section>
 
 	<section class="slide algo"><div>
@@ -192,7 +188,7 @@
 	</div></section>
 
 	<section class="slide"><div>
-		<h2>PostGIS + GeoDjango</h2>
+		<h2>PostgreSQL/PostGIS + GeoDjango</h2>
 
 		<pre>
 			<code>from django.contrib.gis.db import models</code>
@@ -268,6 +264,29 @@
 	</div></section>
 
 	<section class="slide"><div>
+		<h2>Тайловый сервер</h2>
+
+		<ol>
+			<li>TileStache</li>
+			<li>TileCache</li>
+			<li>mod_tile (Apache)</li>
+			<li>TileStream</li>
+		</ol>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Подключаем карту на страницу с помощью Leaflet</h2>
+
+		<pre>
+			<code>&lt;div id="map" style="width: 1200px; height: 900px" /&gt;</code>
+			<code>&lt;script&gt;</code>
+        	<code>    var map = L.map('map').setView([0, 0], 4);</code>
+        	<code>    L.tileLayer('http://127.0.0.1:8080/map/{z}/{x}/{y}.png').addTo(map);</code>
+        	<code>&lt;/script&gt;</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
 		<h2>Получаем данные в GeoJSON из базы данных</h2>
 
 		<pre>
@@ -280,6 +299,40 @@
 			<code>    return HttpResponse(output, content_type='text/json')</code>
 			<code>&nbsp;</code>
 		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Показываем регионы на карте</h2>
+
+		<pre>
+	        <code>$.getJSON(regionsURL, function(data) {</code>
+	        <code>    L.geoJson(data, {</code>
+	        <code>        onEachFeature: function (feature, layer) {</code>
+	        <code>            layer.bindPopup(feature.properties.name, {maxWidth: 200});</code>
+	        <code>        },</code>
+	        <code>        style: function(feature) {</code>
+	        <code>            return {</code>
+	        <code>                "color": randomColor()</code>
+	        <code>            };</code>
+	        <code>        }</code>
+	        <code>    }).addTo(map);</code>
+	        <code>});</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
+		<h2>Спасибо</h2>
+
+		<p>
+			Посмотреть код:
+			<a href="https://github.com/Alerion/fantasy_map">https://github.com/Alerion/fantasy_map</a>
+		</p>
+		<p>
+			Описание алгоритма:
+			<a href="http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/">
+				http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/
+			</a>
+		</p>
 	</div></section>
 	<!--
 		To hide progress bar from entire presentation
