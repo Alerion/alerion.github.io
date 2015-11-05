@@ -12,7 +12,9 @@
 	}
 
 	.slide.algo h2 {
-		font-size: 0.9em;
+		~margin-left: 50px;
+		font-size: 1em;
+	    text-align: center;
 	}
 
 	.slide.algo p {
@@ -22,11 +24,17 @@
 	.slide.algo img {
 		width: 500px;
 		margin-top: -30px;
+	    margin-left: auto;
+	    margin-right: auto;
+	    display: block;
 	}
 
 	.slide.image img {
 		width: 700px;
 		margin-top: -70px;
+	    margin-left: auto;
+	    margin-right: auto;
+	    display: block;
 	}
 
 	pre {
@@ -63,31 +71,47 @@
 		<img src="pictures/1.jpg" alt="" style="margin-top: 30px">
 	</div></section>
 
-	<section class="slide image"><div>
-		<img src="pictures/map1.png" alt="">
+	<section class="slide"><div>
+		<h2>Задача</h2>
+		<p>Создание игрового мира и его отображение на странице.</p>
+		<ul>
+			<li>Процедурная генерация мира.</li>
+			<li>Работаем как с геоданными.</li>
+			<li>Встраиваем на страницу как обычную карту.</li>
+		</ul>
 	</div></section>
 
-	<section class="slide image"><div>
-		<img src="pictures/map2.png" alt="">
+	<section class="slide"><div>
+		<h2>Плюсы решения</h2>
+		<ul>
+			<li>
+				Процедурно можно создать сколько угодно миров с разными параметрами, проверять механику на разных мирах.
+			</li>
+			<li>
+				Работа с геоданными позволяет использовать готовые инструменты, структуры данных и решения.
+				Ниже порог вхождения и стоимость поддержки, можно найти готовые решения стандартных задач.
+			</li>
+			<li>
+				Минимальная необходимость в дизайнере и графике.
+			</li>
+		</ul>
 	</div></section>
 
-	<section class="slide image"><div>
-		<img src="pictures/map3.png" alt="">
-	</div></section>
-
-	<section class="slide image"><div>
-		<img src="pictures/map4.png" alt="">
+	<section class="slide algo"><div>
+		<h2>Архитектура приложения</h2>
+		<img src="pictures/schema.png" alt="" style="width: auto; height: 480px">
 	</div></section>
 
 	<section class="slide"><div>
 		<h2>Генерация мира</h2>
 
 		<ol>
-			<li>Разбиваем плоскость на полигоны, используя диаграмму Вороного</li>
-			<li>Определеяем является ли полигон сушей</li>
-			<li>Генерируем карту высот</li>
-			<li>Генерируем реки</li>
-			<li>Расчитываем биомы</li>
+			<li>Разбиваем плоскость на полигоны.</li>
+			<li>Определяем является ли полигон сушей.</li>
+			<li>Генерируем карту высот.</li>
+			<li>Генерируем реки.</li>
+			<li>Рассчитываем биомы.</li>
+			<li>Генерируем игровые объекты (города, регионы).</li>
 		</ol>
 	</div></section>
 
@@ -97,7 +121,7 @@
 	</div></section>
 
 	<section class="slide algo"><div>
-		<h2>Релаксации Ллойда</h2>
+		<h2>Релаксация Ллойда</h2>
 		<img src="pictures/algo2.png" alt="">
 	</div></section>
 
@@ -113,18 +137,8 @@
 
 	<section class="slide algo"><div>
 		<h2>Шум Перлина</h2>
-		<p>Алгоритм по генерированию процедурной текстуры псевдо-случайным методом. Используется в компьютерной графике для увеличения реализма, генерации эффектов дыма, тумана и т.д.</p>
+		<p>Алгоритм по генерированию процедурной текстуры псевдослучайным методом. Используется в компьютерной графике для увеличения реализма, генерации эффектов дыма, тумана и т.д.</p>
 		<img src="pictures/perlin_noise.jpg" alt="">
-	</div></section>
-
-	<section class="slide algo"><div>
-		<h2>land_threshold=-0.05</h2>
-		<img src="pictures/algo5(islands_level=1.5, land_threshold=-0.05).png" alt="">
-	</div></section>
-
-	<section class="slide algo"><div>
-		<h2>islands_level=3</h2>
-		<img src="pictures/algo5(islands_level=3).png" alt="">
 	</div></section>
 
 	<section class="slide algo"><div>
@@ -163,10 +177,6 @@
 		<img src="pictures/algo10.png" alt="">
 	</div></section>
 
-	<section class="slide image"><div>
-		<img src="pictures/voronoi-map-goal-16000-shaded.png" alt="" style="width: 600px">
-	</div></section>
-
 	<section class="slide"><div>
 		<h2>Используемые библиотеки</h2>
 		<ul>
@@ -182,8 +192,8 @@
 		<h2>Геоданные</h2>
 		<p>Информация, которая имеет географическую (пространственную) привязку.</p>
 		<ul>
-			<li>Векторные</li>
-			<li>Растровые</li>
+			<li>Векторные – описываются набором или последовательностью координат, геометрией и атрибутивными значениями.</li>
+			<li>Растровые – растровые изображения с геопривязкой, например изображения спутников.</li>
 		<ul>
 	</div></section>
 
@@ -254,17 +264,16 @@
 	</div></section>
 
 	<section class="slide algo"><div>
-		<h2>Карта высот</h2>
-		<img src="pictures/hillshade1.png" alt="">
-	</div></section>
-
-	<section class="slide algo"><div>
 		<h2>Карта высот (2000 полигонов + шум)</h2>
 		<img src="pictures/hillshade2.png" alt="">
 	</div></section>
 
 	<section class="slide"><div>
 		<h2>Тайловый сервер</h2>
+
+		<p>
+			Рендерит и сохраняет в кэше тайлы, отдает их клиенту.
+		</p>
 
 		<ol>
 			<li>TileStache</li>
@@ -320,6 +329,22 @@
 		</pre>
 	</div></section>
 
+	<section class="slide image"><div>
+		<img src="pictures/map1.png" alt="">
+	</div></section>
+
+	<section class="slide image"><div>
+		<img src="pictures/map2.png" alt="">
+	</div></section>
+
+	<section class="slide image"><div>
+		<img src="pictures/map3.png" alt="">
+	</div></section>
+
+	<section class="slide image"><div>
+		<img src="pictures/map4.png" alt="">
+	</div></section>
+
 	<section class="slide"><div>
 		<h2>Спасибо</h2>
 
@@ -327,6 +352,7 @@
 			Посмотреть код:
 			<a href="https://github.com/Alerion/fantasy_map">https://github.com/Alerion/fantasy_map</a>
 		</p>
+
 		<p>
 			Описание алгоритма:
 			<a href="http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/">
