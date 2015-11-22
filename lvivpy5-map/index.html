@@ -114,7 +114,7 @@
 			<li>Генерируем карту высот.</li>
 			<li>Генерируем реки.</li>
 			<li>Рассчитываем биомы.</li>
-			<li>Генерируем игровые объекты (города, регионы).</li>
+			<li>Генерируем игровые объекты (города, страны).</li>
 		</ol>
 	</div></section>
 
@@ -134,7 +134,7 @@
 	</div></section>
 
 	<section class="slide algo"><div>
-		<h2>Создаем острова, используя шум Перлина</h2>
+		<h2>Создаем континенты, используя шум Перлина</h2>
 		<img src="pictures/algo5(islands_level=1.5).png" alt="">
 	</div></section>
 
@@ -145,7 +145,7 @@
 	</div></section>
 
 	<section class="slide algo"><div>
-		<h2>Расчет высот</h2>
+		<h2>Строим карту высот</h2>
 		<img src="pictures/algo6.png" alt="">
 	</div></section>
 
@@ -176,15 +176,15 @@
 	Гексовая сетка.
 		-->
 	<section class="slide algo"><div>
-		<h2>Добавляем города и регионы</h2>
+		<h2>Добавляем города и страны</h2>
 		<img src="pictures/algo10.png" alt="">
 	</div></section>
 
 	<section class="slide"><div>
 		<h2>Используемые библиотеки</h2>
 		<ul>
-			<li>numpy (array, random)</li>
-			<li>skipy (KDTree, Voronoi)</li>
+			<li>NumPy (array, random)</li>
+			<li>SciPy (KDTree, Voronoi)</li>
 			<li>shapely</li>
 			<li>noise</li>
 			<li>matplotlib</li>
@@ -259,7 +259,7 @@
 	</div></section>
 
 	<section class="slide"><div>
-		<h2>CartoCSS</h2>
+		<h2>CartoCSS (TileMill)</h2>
 
 		<pre>
 			<code>#buildings {</code>
@@ -287,6 +287,12 @@
 	<section class="slide algo"><div>
 		<h2>Карта высот (2000 полигонов + шум)</h2>
 		<img src="pictures/hillshade2.png" alt="">
+	</div></section>
+
+	<section class="slide algo"><div>
+		<h2>Тайлы</h2>
+
+		<img src="pictures/tiles.png" alt="">
 	</div></section>
 
 	<section class="slide"><div>
@@ -317,6 +323,24 @@
 	</div></section>
 
 	<section class="slide"><div>
+		<h2>GeoJSON</h2>
+
+		<pre>
+			<code>{</code>
+			<code>  "type": "Feature",</code>
+			<code>  "geometry": {</code>
+			<code>    "type": "Point",</code>
+			<code>    "coordinates": [-10.3, 10.1]</code>
+			<code>  },</code>
+			<code>  "properties": {</code>
+			<code>    "name": "Some capital",</code>
+			<code>    "population": 10000</code>
+			<code>  }</code>
+			<code>}</code>
+		</pre>
+	</div></section>
+
+	<section class="slide"><div>
 		<h2>Получаем данные в GeoJSON из базы данных</h2>
 
 		<pre>
@@ -332,7 +356,7 @@
 	</div></section>
 
 	<section class="slide"><div>
-		<h2>Показываем регионы на карте</h2>
+		<h2>Показываем страны на карте</h2>
 
 		<pre>
 	        <code>$.getJSON(regionsURL, function(data) {</code>
@@ -367,7 +391,7 @@
 	</div></section>
 
 	<section class="slide"><div>
-		<h2>Планы на будущее</h2>
+		<h2>Что можно улучшить</h2>
 
 		<ul>
 			<li>Добавить возможность создавать целую планету</li>
