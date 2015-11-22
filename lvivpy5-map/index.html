@@ -259,6 +259,26 @@
 	</div></section>
 
 	<section class="slide"><div>
+		<h2>CartoCSS</h2>
+
+		<pre>
+			<code>#buildings {</code>
+			<code>  [zoom >= 13] {</code>
+			<code>    polygon-fill: @building-low-zoom;</code>
+			<code>    polygon-clip: false;</code>
+			<code>    [zoom >= 15] {</code>
+			<code>      line-color: @building-line;</code>
+			<code>      polygon-fill: @building-fill;</code>
+			<code>      line-width: .75;</code>
+			<code>      line-clip: false;</code>
+			<code>    }</code>
+			<code>  }</code>
+			<code>}</code>
+		</pre>
+	</div></section>
+
+
+	<section class="slide"><div>
 		<h2>Hillshade</h2>
 
 		<img src="pictures/hillshade3.png" alt="" style="width: 700px">
