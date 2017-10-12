@@ -43976,6 +43976,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_1_phaser___default.a.State {
         __WEBPACK_IMPORTED_MODULE_2_react_dom___default.a.render(
             __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
                 __WEBPACK_IMPORTED_MODULE_5__panels_HexPanel___default.a, {
+                    config: this.game.config.world,
                     hex: this.selectedHex,
                     start: this.startSimulation.bind(this),
                     stop: this.stopSimulation.bind(this),
@@ -56126,7 +56127,10 @@ class HexTile extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Graphics {
 
     update () {
         if (this.hex.cell) {
+            this.tileTag.visible = true
             this.tileTag.text = this.hex.cell.name
+        } else {
+            this.tileTag.visible = false
         }
         this.drawHex()
     }
@@ -56205,10 +56209,15 @@ var HexPanel = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (HexPanel.__proto__ || Object.getPrototypeOf(HexPanel)).call(this, props));
 
-        _this.state = { showCellInfo: false };
+        _this.state = {
+            showCellInfo: false,
+            showConfig: false
+        };
 
         _this.openCellInfo = _this.openCellInfo.bind(_this);
         _this.closeCellInfo = _this.closeCellInfo.bind(_this);
+        _this.openConfig = _this.openConfig.bind(_this);
+        _this.closeConfig = _this.closeConfig.bind(_this);
         return _this;
     }
 
@@ -56264,7 +56273,39 @@ var HexPanel = function (_React$Component) {
                         'Reset ',
                         _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'refresh' })
                     ),
-                    displayFilter
+                    displayFilter,
+                    _react2.default.createElement(
+                        _reactBootstrap.Button,
+                        { bsStyle: 'info', onClick: this.openConfig },
+                        'Config ',
+                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'question-sign' })
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Modal,
+                    { show: this.state.showConfig, onHide: this.closeConfig },
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Header,
+                        { closeButton: true },
+                        _react2.default.createElement(
+                            _reactBootstrap.Modal.Title,
+                            null,
+                            'World configuration'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Body,
+                        null,
+                        _react2.default.createElement(
+                            'pre',
+                            { className: 'pre-scrollable', style: { maxHeight: 600 } },
+                            _react2.default.createElement(
+                                'code',
+                                null,
+                                JSON.stringify(this.props.config, null, 4)
+                            )
+                        )
+                    )
                 ),
                 this.renderHex(this.props.hex)
             );
@@ -56295,11 +56336,12 @@ var HexPanel = function (_React$Component) {
                 );
             });
 
-            var cell = '';
+            var cell = hex.cell;
+            var cellInfo = '';
             var cellModal = '';
 
-            if (hex.cell) {
-                var cellResources = _lodash2.default.map(hex.cell.resources, function (value, name) {
+            if (cell) {
+                var cellResources = _lodash2.default.map(cell.resources, function (value, name) {
                     return _react2.default.createElement(
                         _reactBootstrap.ListGroupItem,
                         { key: name },
@@ -56313,10 +56355,10 @@ var HexPanel = function (_React$Component) {
                     );
                 });
 
-                cell = _react2.default.createElement(
+                cellInfo = _react2.default.createElement(
                     'div',
                     null,
-                    hex.cell.name,
+                    cell.name,
                     ' (',
                     hex.i,
                     ', ',
@@ -56330,18 +56372,32 @@ var HexPanel = function (_React$Component) {
                     _react2.default.createElement(
                         _reactBootstrap.ListGroup,
                         null,
+                        _react2.default.createElement(
+                            _reactBootstrap.ListGroupItem,
+                            { key: 'life-time' },
+                            'Life time ',
+                            _react2.default.createElement(
+                                _reactBootstrap.Badge,
+                                null,
+                                (0, _numeral2.default)(cell.lifeTime).format('0')
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.ListGroup,
+                        null,
                         cellResources
                     )
                 );
 
-                var reactionsList = _lodash2.default.map(hex.cell.reactions, function (reaction, index) {
+                var reactionsList = _lodash2.default.map(cell.reactions, function (reaction, index) {
                     return _react2.default.createElement(
                         'li',
                         { key: index },
                         (0, _utils.reactionToText)(reaction)
                     );
                 });
-                var divisionConditionsList = _lodash2.default.map(hex.cell.divisionConditions, function (val, resource) {
+                var divisionConditionsList = _lodash2.default.map(cell.divisionConditions, function (val, resource) {
                     return _react2.default.createElement(
                         'li',
                         { key: resource },
@@ -56357,7 +56413,7 @@ var HexPanel = function (_React$Component) {
                         _react2.default.createElement(
                             _reactBootstrap.Modal.Title,
                             null,
-                            hex.cell.name
+                            cell.name
                         )
                     ),
                     _react2.default.createElement(
@@ -56382,6 +56438,22 @@ var HexPanel = function (_React$Component) {
                             'ul',
                             null,
                             divisionConditionsList
+                        ),
+                        _react2.default.createElement(
+                            'h4',
+                            null,
+                            'Death conditions'
+                        ),
+                        _react2.default.createElement(
+                            'ul',
+                            null,
+                            _react2.default.createElement(
+                                'li',
+                                null,
+                                'Life time: ',
+                                cell.deathConditions && cell.deathConditions.lifeTime,
+                                ' sec'
+                            )
                         )
                     )
                 );
@@ -56395,7 +56467,7 @@ var HexPanel = function (_React$Component) {
                     null,
                     resources
                 ),
-                cell,
+                cellInfo,
                 cellModal
             );
         }
@@ -56408,6 +56480,16 @@ var HexPanel = function (_React$Component) {
         key: 'closeCellInfo',
         value: function closeCellInfo() {
             this.setState({ showCellInfo: false });
+        }
+    }, {
+        key: 'openConfig',
+        value: function openConfig() {
+            this.setState({ showConfig: true });
+        }
+    }, {
+        key: 'closeConfig',
+        value: function closeConfig() {
+            this.setState({ showConfig: false });
         }
     }]);
 
@@ -68591,10 +68673,11 @@ const COLORS = [
     0x8dd3c7, 0xffffb3, 0xbebada, 0xfb8072, 0x80b1d3, 0xfdb462, 0xb3de69, 0xfccde5, 0xd9d9d9,
     0xbc80bd, 0xccebc5, 0xffed6f,
 ]
-/*const COLORS = [
+
+/* const COLORS = [
     0xa6cee3, 0x1f78b4, 0xb2df8a, 0x33a02c, 0xfb9a99, 0xe31a1c, 0xfdbf6f, 0xff7f00,
     0xcab2d6, 0x6a3d9a, 0xffff99, 0xb15928,
-]*/
+] */
 
 class Hex {
     constructor ({ i, j, resources, cell }) {
@@ -68616,6 +68699,7 @@ class Hex {
 
     calcUpdate (delta) {
         if (this.cell) {
+            // Division
             let divided = false
             if (this.cell.canDivide()) {
                 const freeCells = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.filter(this.neighbors, (hex) => {
@@ -68629,20 +68713,36 @@ class Hex {
                 }
             }
 
+            // Reactions
             if (!divided) {
                 this.cell.applyReactions(delta, this)
             }
         }
     }
 
-    applyUpdate () {
+    applyUpdate (delta) {
         __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resourcesDelta, (value, key) => {
             this.resources[key] += value
             this.resourcesDelta[key] = 0
         })
 
         if (this.cell) {
-            this.cell.applyUpdate()
+            this.cell.applyUpdate(delta)
+            // Death
+            // FIXME: Move to other method?
+            if (this.cell.canDie()) {
+                this.cell.die()
+            }
+        }
+    }
+
+    removeDeadCell () {
+        if (this.cell && this.cell.isDead) {
+            // Cell left all resources after death
+            __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.cell.resources, (value, key) => {
+                this.resources[key] += value
+            })
+            this.cell = null
         }
     }
 }
@@ -68651,8 +68751,9 @@ class Hex {
 // Does not keep any resources and cells, just to have proper calculations
 class OutsideHex extends Hex {
     calcUpdate (delta) {}
-    applyUpdate () {}
+    applyUpdate (delta) {}
     applyReaction (reaction, delta) {}
+    removeDeadCells () {}
 }
 
 class HexCollection {
@@ -68747,7 +68848,11 @@ class World {
         })
 
         this.layer.forEach(function (hex) {
-            hex.applyUpdate()
+            hex.applyUpdate(delta)
+        })
+
+        this.layer.forEach(function (hex) {
+            hex.removeDeadCell(delta)
         })
     }
 
@@ -68791,11 +68896,16 @@ class World {
 
 
 class Cell {
-    constructor ({ name, reactions, resources, divisionConditions, color }) {
+    constructor ({ name, reactions, resources, divisionConditions, deathConditions, color }) {
         this.name = name
         this.color = color
         this.reactions = reactions
         this.divisionConditions = divisionConditions
+        this.deathConditions = deathConditions
+
+        this.lifeTime = 0
+        this.isActive = true
+        this.isDead = false
         this.resources = resources
         this.resourcesDelta = {}
         __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resources, (value, key) => {
@@ -68803,18 +68913,25 @@ class Cell {
         })
     }
 
-    applyUpdate () {
+    applyUpdate (delta) {
+        // Some reactions can happen even if cell is not active
         __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resourcesDelta, (value, key) => {
             this.resources[key] += value
             this.resourcesDelta[key] = 0
         })
+
+        if (this.isActive) {
+            this.lifeTime += delta
+        }
     }
 
     applyReactions (delta, hex) {
-        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.reactions, (reaction) => this.applyReaction(delta, reaction, hex))
+        if (this.isActive) {
+            __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.reactions, (reaction) => this._applyReaction(delta, reaction, hex))
+        }
     }
 
-    applyReaction (delta, reaction, hex) {
+    _applyReaction (delta, reaction, hex) {
         const inputs = reaction.inputs
         const output = reaction.output
         const consumed = {}
@@ -68840,8 +68957,20 @@ class Cell {
         }
     }
 
+    canDie () {
+        if (!this.isDead && this.deathConditions) {
+            return this.lifeTime >= this.deathConditions.lifeTime
+        }
+        return false
+    }
+
+    die () {
+        this.isDead = true
+        this.isActive = false
+    }
+
     canDivide () {
-        if (__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isEmpty(this.divisionConditions)) {
+        if (!this.isActive || __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isEmpty(this.divisionConditions)) {
             return false
         }
 
@@ -68851,6 +68980,10 @@ class Cell {
     }
 
     divide () {
+        if (!this.isActive) {
+            return false
+        }
+
         const initilResources = {}
         __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resources, (value, key) => {
             this.resources[key] = value / 2
@@ -68862,6 +68995,7 @@ class Cell {
             reactions: this.reactions,
             resources: initilResources,
             divisionConditions: this.divisionConditions,
+            deathConditions: this.deathConditions,
             color: this.color,
         })
     }
@@ -68887,6 +69021,7 @@ class CellFactory {
             reactions: this.config.reactions,
             resources: Object.assign({}, this.initilResources),
             divisionConditions: this.config.divisionConditions,
+            deathConditions: this.config.deathConditions,
             color: this.color,
         })
         return cell
@@ -68959,7 +69094,7 @@ const CONFIG = {
 
     world: {
         seed: '1234567890',
-        width: 20,
+        width: 26,
         height: 20,
         resources: {
             // Reactions output is split to neighbor hexes. This values tells
@@ -68983,7 +69118,7 @@ const CONFIG = {
             initial: {
                 A: 10,
                 B: 10,
-                C: 0,
+                C: 10,
                 e: 0,
             },
             // maxDispay - used to calculate color and opacity for resource
@@ -69012,22 +69147,52 @@ const CONFIG = {
                 divisionConditions: {
                     C: 30,
                 },
+                deathConditions: {
+                    lifeTime: 5, // seconds
+                },
             }, {
                 name: 'Oridi',
                 reactions: [{
-                    // C => 3e
+                    // A + 2B => C
                     inputs: {
-                        C: 1,
+                        A: 1,
+                        B: 2,
                     },
                     output: {
-                        e: 3,
+                        C: 1,
                     },
                 }],
+                divisionConditions: {
+                    C: 30,
+                },
+                deathConditions: {
+                    lifeTime: 5, // seconds
+                },
+            }, {
+                name: 'Vendi',
+                reactions: [{
+                    // C => A + B
+                    inputs: {
+                        C: 2,
+                    },
+                    output: {
+                        A: 1,
+                        B: 1,
+                    },
+                }],
+                divisionConditions: {
+                    A: 30,
+                    B: 30,
+                },
+                deathConditions: {
+                    lifeTime: 4, // seconds
+                },
             }],
             // Spawn probability
             initial: {
                 Rael: 0.1,
                 Oridi: 0.1,
+                Vendi: 0.1,
             },
         },
     },
