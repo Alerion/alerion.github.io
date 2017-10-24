@@ -68727,16 +68727,17 @@ class Hex {
                 this.cell.applyReactions(delta, this)
             }
         }
-
-        this._calcDiffusion()
     }
 
     applyUpdate (delta) {
         __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resourcesDelta, (value, key) => {
             this.resources[key] += value
+            console.assert(this.resources[key] >= 0, `Resource ${key} is negative value.`)
             this.resourcesDelta[key] = 0
         })
+    }
 
+    applyCellUpdate (delta) {
         if (this.cell) {
             this.cell.applyUpdate(delta)
             // Death
@@ -68757,19 +68758,20 @@ class Hex {
         }
     }
 
-    _calcDiffusion () {
+    calcDiffusion (delta) {
         const NEIGHBORS_COUNT = 6
         __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resources, (value, key) => {
             if (this.resourcesConfig.list[key].isEnergy) {
                 return
             }
 
-            const speed = this.resourcesConfig.list[key].diffusionSpeed
+            const maxSpeed = this.resourcesConfig.list[key].diffusionSpeed
             __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.neighbors, (hex) => {
                 const R1 = this.resources[key]
                 const R2 = hex.resources[key]
                 const concentration = (R1 - R2) / (R1 + R2)
-                this.resourcesDelta[key] += -speed * concentration / NEIGHBORS_COUNT
+                const speed = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.min([maxSpeed, Math.abs(R1 - R2)])
+                this.resourcesDelta[key] += -speed * concentration / NEIGHBORS_COUNT * delta
             })
         })
     }
@@ -68780,7 +68782,9 @@ class Hex {
 class OutsideHex extends Hex {
     calcUpdate (delta) {}
     applyUpdate (delta) {}
+    applyCellUpdate (delta) {}
     applyReaction (reaction, delta) {}
+    calcDiffusion (delta) {}
     removeDeadCells () {}
 }
 
@@ -68880,8 +68884,32 @@ class World {
         })
 
         this.layer.forEach((hex) => {
+            hex.applyCellUpdate(delta)
+        })
+
+        this.layer.forEach((hex) => {
             hex.removeDeadCell(delta)
         })
+
+        // Diffusion
+        let sum1 = 0
+        this.layer.forEach((hex) => {
+            sum1 += hex.resources.A
+        })
+
+        this.layer.forEach((hex) => {
+            hex.calcDiffusion(delta)
+        })
+
+        this.layer.forEach((hex) => {
+            hex.applyUpdate(delta)
+        })
+
+        let sum2 = 0
+        this.layer.forEach((hex) => {
+            sum2 += hex.resources.A
+        })
+        console.assert(Math.abs(sum1 - sum2) < 0.0001, 'Not equal resources after diffusion')
     }
 
     initialize () {
@@ -69160,10 +69188,10 @@ const CONFIG = {
             },
             // maxDispay - used to calculate color and opacity for resource
             maxDispay: {
-                A: 10,
-                B: 10,
-                C: 10,
-                e: 10,
+                A: 20,
+                B: 20,
+                C: 20,
+                e: 20,
             },
         },
         // Lets use Elfs female names http://www.fantasynamegenerators.com/dnd-elf-names.php
@@ -69241,6 +69269,7 @@ __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.resources.maxDi
 
 __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.resources.list, (item) => {
     item.initial = item.initial * RESOURCES_MULTIPLIER
+    item.diffusionSpeed = item.diffusionSpeed * RESOURCES_MULTIPLIER
 })
 
 __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.cells.list, (cell) => {
