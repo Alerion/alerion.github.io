@@ -43877,6 +43877,12 @@ class Game extends __WEBPACK_IMPORTED_MODULE_2_phaser___default.a.Game {
         this.state.add('Game', __WEBPACK_IMPORTED_MODULE_3__states_Game__["a" /* default */])
         this.state.start('Game')
     }
+
+    boot () {
+        super.boot()
+        // Disable game stopping on focus lost
+        this.stage.disableVisibilityChange = true
+    }
 }
 
 window.game = new Game()
@@ -68680,9 +68686,10 @@ const COLORS = [
 ] */
 
 class Hex {
-    constructor ({ i, j, resources, cell }) {
+    constructor ({ i, j, resources, cell, resourcesConfig }) {
         this.i = i
         this.j = j
+        this.resourcesConfig = resourcesConfig
         this.resources = resources
         this.cell = cell
         this.neighbors = []
@@ -68694,7 +68701,9 @@ class Hex {
     }
 
     setNeighbors (neighbors) {
-        this.neighbors = neighbors
+        this.neighbors = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.filter(neighbors, (hex) => {
+            return hex.resources
+        })
     }
 
     calcUpdate (delta) {
@@ -68718,6 +68727,8 @@ class Hex {
                 this.cell.applyReactions(delta, this)
             }
         }
+
+        this._calcDiffusion()
     }
 
     applyUpdate (delta) {
@@ -68744,6 +68755,23 @@ class Hex {
             })
             this.cell = null
         }
+    }
+
+    _calcDiffusion () {
+        const NEIGHBORS_COUNT = 6
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resources, (value, key) => {
+            if (this.resourcesConfig.list[key].isEnergy) {
+                return
+            }
+
+            const speed = this.resourcesConfig.list[key].diffusionSpeed
+            __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.neighbors, (hex) => {
+                const R1 = this.resources[key]
+                const R2 = hex.resources[key]
+                const concentration = (R1 - R2) / (R1 + R2)
+                this.resourcesDelta[key] += -speed * concentration / NEIGHBORS_COUNT
+            })
+        })
     }
 }
 
@@ -68821,12 +68849,12 @@ class World {
         this.rnd.sow(this.seed)
 
         this.resources = {}
-        resources.list.forEach((item) => {
-            this.resources[item.name] = new __WEBPACK_IMPORTED_MODULE_2__Resource_js__["a" /* default */](item)
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(resources.list, (item, name) => {
+            this.resources[name] = new __WEBPACK_IMPORTED_MODULE_2__Resource_js__["a" /* default */](item)
         })
 
         this.cells = {}
-        cells.list.forEach((item, index) => {
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.values(cells.list), (item, index) => {
             this.cells[item.name] = new __WEBPACK_IMPORTED_MODULE_1__CellFactory_js__["a" /* default */]({
                 config: item,
                 resourcesConfig: this.resourcesConfig,
@@ -68843,20 +68871,25 @@ class World {
         // Then changes are applied. This way only current values are used form
         // calculation and we avoid situation, when next hex use already updated
         // values from previous hex.
-        this.layer.forEach(function (hex) {
+        this.layer.forEach((hex) => {
             hex.calcUpdate(delta)
         })
 
-        this.layer.forEach(function (hex) {
+        this.layer.forEach((hex) => {
             hex.applyUpdate(delta)
         })
 
-        this.layer.forEach(function (hex) {
+        this.layer.forEach((hex) => {
             hex.removeDeadCell(delta)
         })
     }
 
     initialize () {
+        const resourcesInitial = {}
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resourcesConfig.list, (item) => {
+            resourcesInitial[item.name] = item.initial
+        })
+
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 let cell
@@ -68865,11 +68898,13 @@ class World {
                 if (cellName) {
                     cell = this.cells[cellName].create()
                 }
+
                 const hex = new Hex({
                     i: i,
                     j: j,
-                    resources: Object.assign({}, this.resourcesConfig.initial),
+                    resources: Object.assign({}, resourcesInitial),
                     cell: cell,
+                    resourcesConfig: this.resourcesConfig,
                 })
                 this.layer.set(i, j, hex)
             }
@@ -69097,29 +69132,31 @@ const CONFIG = {
         width: 26,
         height: 20,
         resources: {
-            // Reactions output is split to neighbor hexes. This values tells
-            // what part of output is split to six neighbors. 0 - nothing split to neighbors,
-            // 1 - all split and no output to current hex with cell.
-            updateSplitRatio: 0.3,
-            list: [{
-                name: 'A',
-                isEnergy: false,
-            }, {
-                name: 'B',
-                isEnergy: false,
-            }, {
-                name: 'C',
-                isEnergy: false,
-            }, {
-                name: 'e',
-                isEnergy: true,
-            }],
-            // Add all possible resources at least with 0
-            initial: {
-                A: 10,
-                B: 10,
-                C: 10,
-                e: 0,
+            list: {
+                A: {
+                    name: 'A',
+                    isEnergy: false,
+                    diffusionSpeed: 20,
+                    initial: 10,
+                },
+                B: {
+                    name: 'B',
+                    isEnergy: false,
+                    diffusionSpeed: 20,
+                    initial: 10,
+                },
+                C: {
+                    name: 'C',
+                    isEnergy: false,
+                    diffusionSpeed: 20,
+                    initial: 10,
+                },
+                e: {
+                    name: 'e',
+                    isEnergy: true,
+                    diffusionSpeed: 20,
+                    initial: 0,
+                },
             },
             // maxDispay - used to calculate color and opacity for resource
             maxDispay: {
@@ -69202,8 +69239,8 @@ __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.resources.maxDi
     CONFIG.world.resources.maxDispay[key] = value * RESOURCES_MULTIPLIER
 })
 
-__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.resources.initial, (value, key) => {
-    CONFIG.world.resources.initial[key] = value * RESOURCES_MULTIPLIER
+__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.resources.list, (item) => {
+    item.initial = item.initial * RESOURCES_MULTIPLIER
 })
 
 __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.cells.list, (cell) => {
