@@ -43971,7 +43971,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_1_phaser___default.a.State {
         }, {
             key: '',
         }]
-        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.world.resourcesConfig.list, (item) => {
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.world.resourcesConfig, (item) => {
             displayChoices.push({
                 key: item.name,
                 name: item.name,
@@ -44085,7 +44085,7 @@ class Game extends __WEBPACK_IMPORTED_MODULE_1_phaser___default.a.State {
         } else {
             const color = 0x8dd3c7
             const resource = this.displayMode
-            const maxVal = this.world.resourcesConfig.maxDispay[resource]
+            const maxVal = this.world.resourcesConfig[resource].maxDispay
             const val = hex.resources[resource]
             const opacity = 0.1 + val / maxVal * 0.9
             return {color, opacity}
@@ -68761,16 +68761,16 @@ class Hex {
     calcDiffusion (delta) {
         const NEIGHBORS_COUNT = 6
         __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resources, (value, key) => {
-            if (this.resourcesConfig.list[key].isEnergy) {
+            if (this.resourcesConfig[key].isEnergy) {
                 return
             }
 
-            const maxSpeed = this.resourcesConfig.list[key].diffusionSpeed
+            const maxSpeed = this.resourcesConfig[key].diffusionSpeed
             __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.neighbors, (hex) => {
                 const R1 = this.resources[key]
                 const R2 = hex.resources[key]
                 const concentration = (R1 - R2) / (R1 + R2)
-                const speed = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.min([maxSpeed, Math.abs(R1 - R2)])
+                const speed = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.min([maxSpeed, Math.abs(R1 - R2) / 2])
                 this.resourcesDelta[key] += -speed * concentration / NEIGHBORS_COUNT * delta
             })
         })
@@ -68853,12 +68853,12 @@ class World {
         this.rnd.sow(this.seed)
 
         this.resources = {}
-        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(resources.list, (item, name) => {
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(resources, (item, name) => {
             this.resources[name] = new __WEBPACK_IMPORTED_MODULE_2__Resource_js__["a" /* default */](item)
         })
 
         this.cells = {}
-        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.values(cells.list), (item, index) => {
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.values(cells), (item, index) => {
             this.cells[item.name] = new __WEBPACK_IMPORTED_MODULE_1__CellFactory_js__["a" /* default */]({
                 config: item,
                 resourcesConfig: this.resourcesConfig,
@@ -68914,14 +68914,19 @@ class World {
 
     initialize () {
         const resourcesInitial = {}
-        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resourcesConfig.list, (item) => {
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.resourcesConfig, (item) => {
             resourcesInitial[item.name] = item.initial
+        })
+
+        const cellsProbability = {}
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(this.cellsConfig, (item) => {
+            cellsProbability[item.name] = item.initial
         })
 
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 let cell
-                const cellName = this.rnd.randomCell(this.cellsConfig.initial)
+                const cellName = this.rnd.randomCell(cellsProbability)
 
                 if (cellName) {
                     cell = this.cells[cellName].create()
@@ -69071,7 +69076,7 @@ class CellFactory {
         this.color = color
 
         this.initilResources = {}
-        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(resourcesConfig.list, (item) => {
+        __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(resourcesConfig, (item) => {
             if (!item.isEnergy) {
                 this.initilResources[item.name] = 0
             }
@@ -69160,45 +69165,43 @@ const CONFIG = {
         width: 26,
         height: 20,
         resources: {
-            list: {
-                A: {
-                    name: 'A',
-                    isEnergy: false,
-                    diffusionSpeed: 20,
-                    initial: 10,
-                },
-                B: {
-                    name: 'B',
-                    isEnergy: false,
-                    diffusionSpeed: 20,
-                    initial: 10,
-                },
-                C: {
-                    name: 'C',
-                    isEnergy: false,
-                    diffusionSpeed: 20,
-                    initial: 10,
-                },
-                e: {
-                    name: 'e',
-                    isEnergy: true,
-                    diffusionSpeed: 20,
-                    initial: 0,
-                },
+            A: {
+                name: 'A',
+                isEnergy: false,
+                diffusionSpeed: 20,
+                initial: 10,
+                // maxDispay - used to calculate color and opacity for resource
+                maxDispay: 15,
             },
-            // maxDispay - used to calculate color and opacity for resource
-            maxDispay: {
-                A: 20,
-                B: 20,
-                C: 20,
-                e: 20,
+            B: {
+                name: 'B',
+                isEnergy: false,
+                diffusionSpeed: 20,
+                initial: 10,
+                maxDispay: 15,
+            },
+            C: {
+                name: 'C',
+                isEnergy: false,
+                diffusionSpeed: 20,
+                initial: 10,
+                maxDispay: 15,
+            },
+            e: {
+                name: 'e',
+                isEnergy: true,
+                diffusionSpeed: 20,
+                initial: 0,
+                maxDispay: 15,
             },
         },
         // Lets use Elfs female names http://www.fantasynamegenerators.com/dnd-elf-names.php
         // Just for mem
         cells: {
-            list: [{
+            Rael: {
                 name: 'Rael',
+                // Spawn probability
+                initial: 0.1,
                 reactions: [{
                     // 2A + B => C
                     inputs: {
@@ -69209,14 +69212,21 @@ const CONFIG = {
                         C: 1,
                     },
                 }],
+                storage: {
+                    A: 20,
+                    B: 10,
+                    C: 30,
+                },
                 divisionConditions: {
                     C: 30,
                 },
                 deathConditions: {
                     lifeTime: 5, // seconds
                 },
-            }, {
+            },
+            Oridi: {
                 name: 'Oridi',
+                initial: 0.1,
                 reactions: [{
                     // A + 2B => C
                     inputs: {
@@ -69227,52 +69237,55 @@ const CONFIG = {
                         C: 1,
                     },
                 }],
+                storage: {
+                    A: 10,
+                    B: 20,
+                    C: 30,
+                },
                 divisionConditions: {
                     C: 30,
                 },
                 deathConditions: {
                     lifeTime: 5, // seconds
                 },
-            }, {
+            },
+            Vendi: {
                 name: 'Vendi',
+                initial: 0.1,
                 reactions: [{
-                    // C => A + B
+                    // C => 1.5A + 1.5B
                     inputs: {
-                        C: 2,
+                        C: 1,
                     },
                     output: {
-                        A: 1,
-                        B: 1,
+                        A: 1.5,
+                        B: 1.5,
                     },
                 }],
+                storage: {
+                    A: 45,
+                    B: 45,
+                    C: 10,
+                },
                 divisionConditions: {
-                    A: 30,
-                    B: 30,
+                    A: 45,
+                    B: 45,
                 },
                 deathConditions: {
                     lifeTime: 4, // seconds
                 },
-            }],
-            // Spawn probability
-            initial: {
-                Rael: 0.1,
-                Oridi: 0.1,
-                Vendi: 0.1,
             },
         },
     },
 }
 
-__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.resources.maxDispay, (value, key) => {
-    CONFIG.world.resources.maxDispay[key] = value * RESOURCES_MULTIPLIER
-})
-
-__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.resources.list, (item) => {
+__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.resources, (item) => {
     item.initial = item.initial * RESOURCES_MULTIPLIER
     item.diffusionSpeed = item.diffusionSpeed * RESOURCES_MULTIPLIER
+    item.maxDispay = item.maxDispay * RESOURCES_MULTIPLIER
 })
 
-__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.cells.list, (cell) => {
+__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(CONFIG.world.cells, (cell) => {
     __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(cell.reactions, (reaction) => {
         __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.each(reaction.inputs, (value, key) => {
             reaction.inputs[key] = value * RESOURCES_MULTIPLIER
